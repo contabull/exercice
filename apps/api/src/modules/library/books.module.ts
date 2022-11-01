@@ -4,7 +4,6 @@ import {BookResolver} from "./resolvers/book.resolver";
 import {BookServiceFactory} from "./resolvers/use-cases";
 import {PrismaService} from "../../core/prisma/prisma.service";
 
-
 @Module({
     providers: [
         BookRepository,

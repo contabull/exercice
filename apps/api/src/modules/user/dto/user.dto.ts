@@ -7,4 +7,5 @@ export class UserDto {
 
   @Field()
   email: string;
+
 }

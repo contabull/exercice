@@ -9,23 +9,26 @@ export class BookRepository {
 
     async create(
         userId: number,
-        book: Pick<CreateBookDto, `title` | `author`>,
+        author: string,
+        title: string,
+
     ) {
         return this.prisma.book.create({
             data: {
-                ...book,
                 userId,
+                title,
+                author
             },
         });
     }
 
     async update(
         id: number,
-        user: Pick<CreateBookDto, `title` | `author`>,
+        book: Pick<CreateBookDto, `title` | `author`>,
     ) {
         return this.prisma.book.update({
             where: { id },
-            data: { ...user },
+            data: { ...book },
         });
     }
 
@@ -33,10 +36,19 @@ export class BookRepository {
         return this.prisma.book.findUnique({ where: { id } });
     }
 
-    async findByUserId(id: number) {
-        return this.prisma.user.findUnique({
-            where: { id },
-            select: { book: true },
+    async findByDto(dto: CreateBookDto) {
+        return this.prisma.book.findFirst({
+            where: { title: dto.title, author: dto.author }
         });
+    }
+
+
+
+    async findAllById(id: number) {
+          return await this.prisma.user.findMany({
+            where: { id },
+              select: { book: true }
+        });
+
     }
 }

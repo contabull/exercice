@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../../../core/auth/guards/graphql-auth.guard';
 import { Ctx } from '../../../core/auth/decorators/context.decorator';
@@ -7,10 +7,24 @@ import { BookServiceFactory } from './use-cases';
 import { CreateOrUpdateUsecaseBook } from './use-cases/create-or-update.usecase';
 import {BookDto} from "../dto/book.dto";
 import {CreateBookDto} from "../dto/create-book.dto";
+import {FindAllUsecase} from "./use-cases/find-all.usecase";
 
 @Resolver()
 export class BookResolver {
     constructor(private readonly serviceFactory: BookServiceFactory) {}
+
+    @UseGuards(GqlAuthGuard)
+    @Query(() => [BookDto], {
+        name: "getAllBooks",
+        description: "receives user id and returns an array of books registered to the user"
+    })
+    async getAll(
+    @Ctx() ctx: TCtx,
+    ) {
+        return(await this.serviceFactory.create(FindAllUsecase)).handle(
+            ctx
+        )
+    }
 
     @UseGuards(GqlAuthGuard)
     @Mutation(() => BookDto, {
@@ -26,4 +40,6 @@ export class BookResolver {
             dto,
         );
     }
+
+
 }

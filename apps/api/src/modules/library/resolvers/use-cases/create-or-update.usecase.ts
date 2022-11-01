@@ -23,14 +23,16 @@ export class CreateOrUpdateUsecaseBook
                 throw new GraphQLError(`Unauthorized`);
             }
 
+            //const {id, ...data} = dto;
             return this.bookRepository.update(book.id, dto);
         }
 
-        const book = await this.bookRepository.findByUserId(ctx.id);
+        const book = await this.bookRepository.findByDto(dto);
 
         if (book) {
             throw new GraphQLError(`This book already exists for this user`);
         }
-        return this.bookRepository.create(ctx.id, dto);
+
+        return this.bookRepository.create(ctx.id, dto.author, dto.title);
     }
 }
