@@ -13,7 +13,10 @@ export class ProfileResolver {
   constructor(private readonly serviceFactory: ProfileServiceFactory) {}
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => ProfileDto)
+  @Mutation(() => ProfileDto, {
+    name: "createOrUpdateProfile",
+    description: "This resolver creates a profile if the user doesn't have one or updates it if he does"
+  })
   async createOrUpdate(
     @Args(`dto`, { type: () => CreateProfileDto }) dto: CreateProfileDto,
     @Ctx() ctx: TCtx,

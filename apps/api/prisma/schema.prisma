@@ -17,6 +17,7 @@ model User {
   password String
 
   profile  Profile?
+  book     Book?
 }
 
 model Profile {
@@ -29,4 +30,13 @@ model Profile {
   techStack String
   birthday  DateTime
   city      String
+}
+
+model Book {
+  id Int @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  title    String
+  author   String
 }
