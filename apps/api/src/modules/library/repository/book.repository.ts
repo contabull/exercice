@@ -45,10 +45,9 @@ export class BookRepository {
 
 
     async findAllById(id: number) {
-          return await this.prisma.user.findMany({
+          return this.prisma.user.findUnique({
             where: { id },
               select: { book: true }
         });
-
     }
 }

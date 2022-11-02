@@ -17,7 +17,7 @@ model User {
   password String
 
   profile  Profile?
-  book     Book?
+  book     Book[]
 }
 
 model Profile {
@@ -35,7 +35,7 @@ model Profile {
 model Book {
   id Int @id @default(autoincrement())
   user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
+  userId Int
 
   title    String
   author   String

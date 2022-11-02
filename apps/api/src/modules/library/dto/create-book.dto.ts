@@ -11,6 +11,6 @@ export class CreateBookDto {
     @Field()
     author: string;
 
-    @Field({nullable: true})
-    userId?: number;
+    @Field()
+    userId: number;
 }
