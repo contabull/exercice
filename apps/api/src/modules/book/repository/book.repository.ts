@@ -35,15 +35,6 @@ export class BookRepository {
         return this.prisma.book.findUnique({ where: { id } });
     }
 
-    /*
-    async findByDto(dto: CreateBookDto) {
-        return this.prisma.book.findFirst({
-            where: { title: dto.title, author: dto.author }
-        });
-    }
- */
-
-
     async findAllByUserId(id: number) {
           return this.prisma.book.findMany({ where: { userId: id } });
     }
