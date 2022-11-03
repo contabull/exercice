@@ -12,4 +12,4 @@ import {PrismaService} from "../../core/prisma/prisma.service";
         BookServiceFactory,
     ],
 })
-export class BooksModule {}
+export class BookModule {}

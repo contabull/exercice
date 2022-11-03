@@ -4,7 +4,7 @@ import { GqlAuthGuard } from '../../../core/auth/guards/graphql-auth.guard';
 import { Ctx } from '../../../core/auth/decorators/context.decorator';
 import { TCtx } from '../../../types';
 import { BookServiceFactory } from './use-cases';
-import { CreateOrUpdateUsecaseBook } from './use-cases/create-or-update.usecase';
+import { CreateOrUpdateBookUseCase } from './use-cases/create-or-update.usecase';
 import {BookDto} from "../dto/book.dto";
 import {CreateBookDto} from "../dto/create-book.dto";
 import {FindAllUsecase} from "./use-cases/find-all.usecase";
@@ -18,7 +18,7 @@ export class BookResolver {
         name: "getAllBooks",
         description: "receives user id and returns an array of books registered to the user"
     })
-    async getAll(
+    async findAll(
     @Ctx() ctx: TCtx,
     ) {
         return(await this.serviceFactory.create(FindAllUsecase)).handle(
@@ -35,7 +35,7 @@ export class BookResolver {
         @Args(`dto`, { type: () => CreateBookDto }) dto: CreateBookDto,
         @Ctx() ctx: TCtx,
     ) {
-        return (await this.serviceFactory.create(CreateOrUpdateUsecaseBook)).handle(
+        return (await this.serviceFactory.create(CreateOrUpdateBookUseCase)).handle(
             ctx,
             dto,
         );

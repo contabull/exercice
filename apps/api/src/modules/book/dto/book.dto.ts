@@ -11,6 +11,4 @@ export class BookDto {
     @Field()
     author: string;
 
-    @Field()
-    userId: number;
 }

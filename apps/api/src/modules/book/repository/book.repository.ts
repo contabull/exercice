@@ -11,7 +11,6 @@ export class BookRepository {
         userId: number,
         author: string,
         title: string,
-
     ) {
         return this.prisma.book.create({
             data: {
@@ -36,18 +35,16 @@ export class BookRepository {
         return this.prisma.book.findUnique({ where: { id } });
     }
 
+    /*
     async findByDto(dto: CreateBookDto) {
         return this.prisma.book.findFirst({
             where: { title: dto.title, author: dto.author }
         });
     }
+ */
 
 
-
-    async findAllById(id: number) {
-          return this.prisma.user.findUnique({
-            where: { id },
-              select: { book: true }
-        });
+    async findAllByUserId(id: number) {
+          return this.prisma.book.findMany({ where: { userId: id } });
     }
 }

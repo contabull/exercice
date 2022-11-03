@@ -6,7 +6,7 @@ import {CreateBookDto} from "../../dto/create-book.dto";
 import {BookRepository} from "../../repository/book.repository";
 
 @Injectable()
-export class CreateOrUpdateUsecaseBook
+export class CreateOrUpdateBookUseCase
     implements UseCase<Promise<BookDto>, [ctx: TCtx, dto: CreateBookDto]>
 {
     constructor(private readonly bookRepository: BookRepository) {}
@@ -16,21 +16,14 @@ export class CreateOrUpdateUsecaseBook
             const book = await this.bookRepository.findById(dto.id);
 
             if (!book) {
-                throw new GraphQLError(`Book not found`);
+                throw new GraphQLError(`Book was not found`);
             }
 
             if (book.userId !== ctx.id) {
                 throw new GraphQLError(`Unauthorized`);
             }
 
-            //const {id, ...data} = dto;
             return this.bookRepository.update(book.id, dto);
-        }
-
-        const book = await this.bookRepository.findByDto(dto);
-
-        if (book) {
-            throw new GraphQLError(`This book already exists for this user`);
         }
 
         return this.bookRepository.create(ctx.id, dto.author, dto.title);

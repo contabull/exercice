@@ -2,41 +2,41 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id Int @id @default(autoincrement())
+    id Int @id @default(autoincrement())
 
-  email    String @unique
-  password String
+    email    String @unique
+    password String
 
-  profile  Profile?
-  book     Book[]
+    profile Profile?
+    book    Book[]
 }
 
 model Profile {
-  id Int @id @default(autoincrement())
+    id Int @id @default(autoincrement())
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
+    user   User @relation(fields: [userId], references: [id])
+    userId Int  @unique
 
-  name      String
-  techStack String
-  birthday  DateTime
-  city      String
+    name      String
+    techStack String
+    birthday  DateTime
+    city      String
 }
 
 model Book {
-  id Int @id @default(autoincrement())
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+    id     Int  @id @default(autoincrement())
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
 
-  title    String
-  author   String
+    title  String
+    author String
 }
