@@ -7,4 +7,5 @@ export class CreateUserDto {
 
   @Field()
   password: string;
+
 }
